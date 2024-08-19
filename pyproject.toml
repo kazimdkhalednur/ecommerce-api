@@ -1,0 +1,26 @@
+[project]
+name = "Ecommerce API"
+dynamic = ["version"]
+requires-python = ">= 3.12"
+authors = [
+  {name = "Kazi Khaled Nur", email = "kazikhalednur@gmail.com"},
+]
+readme = "README.rst"
+license = {text = "BSD-3-Clause"}
+
+[project.urls]
+Source = "https://github.com/kazimdkhalednur/ecommerce-api"
+
+[tool.black]
+target-version = ["py312"]
+exclude = '''
+/(
+    migrations
+    | migrations/.*
+)
+'''
+
+[tool.isort]
+profile = "black"
+default_section = "THIRDPARTY"
+known_first_party = "django"

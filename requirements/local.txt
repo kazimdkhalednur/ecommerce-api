@@ -1,0 +1,10 @@
+-r base.txt
+
+black==24.8.0
+blacken-docs==1.18.0
+django-debug-toolbar==4.4.6
+drf-spectacular==0.27.2
+drf-spectacular-sidecar==2024.7.1
+flake8==7.1.1
+isort==5.13.2
+pre-commit==3.8.0
