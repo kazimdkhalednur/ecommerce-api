@@ -1,5 +1,5 @@
 [project]
-name = "Ecommerce API"
+name = "Multi Vendor Ecommerce API"
 dynamic = ["version"]
 requires-python = ">= 3.12"
 authors = [
