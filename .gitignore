@@ -4,8 +4,9 @@
 *.pyc
 __pycache__
 *.sqlite3
-uploads
-static
+logs/
+uploads/
+static/
 
 # Backup files # 
 *.bak 

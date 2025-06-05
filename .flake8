@@ -1,6 +1,4 @@
 [flake8]
-exclude = .git,*/migrations/*,__pycache__
-extend-ignore = E203
+exclude = venv, .git, */migrations/*, */migrations_generated/*, config/settings/*, __init__.py,__pycache__
+extend-ignore = F405, F811
 max-line-length = 88
-per-file-ignores =
-    src/config/settings/*.py:F401,F403,F405
