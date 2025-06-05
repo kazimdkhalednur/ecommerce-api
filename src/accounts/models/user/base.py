@@ -64,37 +64,3 @@ class User(AbstractUser):
     @staticmethod
     def is_buyer(self):
         return self.role == User.UserRole.BUYER
-
-
-class BuyerManager(UserManager):
-    def get_queryset(self):
-        return super().get_queryset().filter(role=User.UserRole.BUYER)
-
-
-class Buyer(User):
-    objects = BuyerManager()
-
-    class Meta:
-        proxy = True
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.role = User.UserRole.BUYER
-        super(Buyer, self).save(*args, **kwargs)
-
-
-class SellerManager(UserManager):
-    def get_queryset(self):
-        return super().get_queryset().filter(role=User.UserRole.SELLER)
-
-
-class Seller(User):
-    objects = SellerManager()
-
-    class Meta:
-        proxy = True
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.role = User.UserRole.SELLER
-        super(Seller, self).save(*args, **kwargs)
