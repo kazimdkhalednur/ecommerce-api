@@ -25,23 +25,15 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema")),
 ]
 
 if settings.ENVIRONMENT == "local":
-    urlpatterns += [
-        path("__debug__/", include("debug_toolbar.urls")),
-        path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-        path(
-            "api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema")
-        ),
-    ]
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
+    if not settings.TESTING:
+        urlpatterns += debug_toolbar_urls()
+
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-elif settings.ENVIRONMENT == "staging":
-    urlpatterns += [
-        path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-        path(
-            "api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema")
-        ),
-    ]

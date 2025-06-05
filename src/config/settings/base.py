@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import sys
 from pathlib import Path
 
 from decouple import Csv, config
+
+TESTING = "test" in sys.argv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -45,9 +48,11 @@ INSTALLED_APPS = [
     # myapp
     "accounts.apps.AccountsConfig",
     # third-party
+    "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
-    "corsheaders",
+    "rest_framework_simplejwt.token_blacklist",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -134,6 +139,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
+STATIC_ROOT = BASE_DIR / "static"
+MEDIA_URL = "uploads/"
+MEDIA_ROOT = BASE_DIR / "uploads"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -142,13 +151,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # django restframework configurations
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
+    "DEFAULT_RENDERER_CLASSES": ("utils.helpers.JSONRenderer",),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
-    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    ),
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Multi Vendor Ecommerce API",
+    "DESCRIPTION": "API documentation for the Multi Vendor Ecommerce project.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "POSTPROCESSING_HOOKS": ["utils.helpers.custom_schema_postprocessing"],
+}
+
+SIMPLE_JWT = {
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+    "CHECK_REVOKE_TOKEN": True,
 }
 
 # djagno cors header configuration
