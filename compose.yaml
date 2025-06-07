@@ -9,7 +9,8 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
-    image: ecommerce-api-server
+    image: ecommerce-api-server:latest
+    container_name: server
     env_file:
       - .env
     build:
