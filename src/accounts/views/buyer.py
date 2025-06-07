@@ -3,7 +3,8 @@ from rest_framework import serializers as drf_serializers
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
-from rest_framework.views import Response
+
+from utils.helpers import Response
 
 from ..serializers import BuyerSerializer
 
@@ -23,7 +24,7 @@ from ..serializers import BuyerSerializer
         },
     )
 )
-class SignUpView(CreateAPIView):
+class BuyerSignUpView(CreateAPIView):
     """Buyer signup view"""
 
     authentication_classes = ()
@@ -33,6 +34,6 @@ class SignUpView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         return Response(
-            {"message": "User created Successfully and check your mail inbox"},
-            status=status.HTTP_201_CREATED,
+            status_code=status.HTTP_201_CREATED,
+            message="User created Successfully and check your mail inbox",
         )
