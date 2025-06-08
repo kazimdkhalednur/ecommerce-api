@@ -7,8 +7,8 @@ from rest_framework.views import APIView
 from utils.helpers import Response
 
 from .. import serializers
-from ..mails import send_reset_mail
 from ..models import OTP
+from ..tasks import send_reset_mail_task
 
 
 @extend_schema(
@@ -45,7 +45,7 @@ class PasswordResetMailView(APIView):
             user = serializer.get_user()
             otp, created = OTP.objects.get_or_create(user=user)
             if created:
-                send_reset_mail(user)
+                send_reset_mail_task.delay(user.id)
 
                 return Response(
                     message="Password reset mail was sent",
@@ -54,7 +54,7 @@ class PasswordResetMailView(APIView):
             elif otp.is_expired():
                 otp.delete()
                 OTP.objects.create(user=user)
-                send_reset_mail(user)
+                send_reset_mail_task.delay(user.id)
                 return Response(
                     message="Password reset mail was sent",
                     status_code=status.HTTP_202_ACCEPTED,

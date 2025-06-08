@@ -21,6 +21,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     ports:
       - 8000:8000
 
@@ -32,7 +34,7 @@ services:
 # a password of your choosing to it before running `docker compose up`.
 
   db:
-    image: postgres
+    image: postgres:17-alpine
     restart: always
     user: postgres
     secrets:
@@ -49,9 +51,35 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  
+  redis:
+    image: redis:8-alpine
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  celery:
+    image: ecommerce-api-server:latest
+    container_name: celery_worker
+    env_file:
+      - .env
+    volumes:
+      - ./src/:/app/
+    command: >
+      watchmedo auto-restart --directory=/app/ --pattern=*.py --recursive -- celery -A config worker --loglevel=info
+    depends_on:
+      - server
 
 volumes:
   db-data:
+  redis-data:
 
 secrets:
   db-password:
