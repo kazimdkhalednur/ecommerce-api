@@ -35,7 +35,7 @@ python -m pip install -r requirements/local.txt
 
 
 # Stage 2: Production stage
-FROM python:${PYTHON_VERSION}-alpine
+FROM python:${PYTHON_VERSION}-alpine AS final
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
