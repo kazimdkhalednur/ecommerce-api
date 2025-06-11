@@ -14,7 +14,7 @@ from ..tokens import token_generator
 
 
 @extend_schema_view(
-    post=extend_schema(
+    get=extend_schema(
         tags=["buyer"],
         responses={
             200: inline_serializer(
@@ -29,7 +29,7 @@ from ..tokens import token_generator
     )
 )
 class VerificationEmailConfirmView(APIView):
-    """Verification email confirm view"""
+    """Email Verification API"""
 
     authentication_classes = ()
     permission_classes = [AllowAny]

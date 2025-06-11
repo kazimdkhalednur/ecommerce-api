@@ -8,6 +8,7 @@ from .. import serializers
 
 
 @extend_schema(
+    tags=["password-change"],
     responses={
         200: inline_serializer(
             name="PasswordChangeViewResponse",
@@ -17,7 +18,7 @@ from .. import serializers
                 ),
             },
         )
-    }
+    },
 )
 class PasswordChangeView(UpdateAPIView):
     """Password Change API"""

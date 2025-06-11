@@ -12,6 +12,7 @@ from ..tasks import send_reset_mail_task
 
 
 @extend_schema(
+    tags=["password-reset"],
     responses={
         200: inline_serializer(
             name="PasswordResetMailViewResponse",
@@ -29,7 +30,7 @@ from ..tasks import send_reset_mail_task
                 ),
             },
         ),
-    }
+    },
 )
 class PasswordResetMailView(APIView):
     """Password Reset Mail API"""

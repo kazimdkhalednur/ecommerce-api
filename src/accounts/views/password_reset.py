@@ -9,6 +9,7 @@ from .. import serializers
 
 
 @extend_schema(
+    tags=["password-reset"],
     responses={
         200: inline_serializer(
             name="PasswordResetViewResponse",
@@ -18,7 +19,7 @@ from .. import serializers
                 ),
             },
         )
-    }
+    },
 )
 class PasswordResetView(CreateAPIView):
     """Password Reset API"""

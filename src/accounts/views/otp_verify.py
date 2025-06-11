@@ -9,6 +9,7 @@ from .. import serializers
 
 
 @extend_schema(
+    tags=["password-reset"],
     responses={
         200: inline_serializer(
             name="OTPVerifyResponse",
@@ -18,7 +19,7 @@ from .. import serializers
                 ),
             },
         )
-    }
+    },
 )
 class OTPVerifyView(CreateAPIView):
     """OTP Verify API"""
