@@ -43,6 +43,7 @@ def Response(
     status_code: int = 200,
     message: str = "Request successful",
     data: dict | list | None = None,
+    headers=None,
 ):
     """
     Utility function to generate a custom API response.
@@ -58,7 +59,7 @@ def Response(
     response = {"status_code": status_code, "message": message}
     if data is not None:
         response.update({"data": data})
-    return DRFResponse(response, status=status_code)
+    return DRFResponse(response, status=status_code, headers=headers)
 
 
 def is_schema_empty(schema, components):

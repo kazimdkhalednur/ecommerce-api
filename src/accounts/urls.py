@@ -8,6 +8,11 @@ app_name = "accounts"
 
 urlpatterns = [
     path("signup/", views.BuyerSignUpView.as_view(), name="buyer-signup"),
+    path(
+        "verify/<str:uidb64>/<str:token>/",
+        views.VerificationEmailConfirmView.as_view(),
+        name="verification_email_confirm",
+    ),
     path("login/", views.TokenObtainPairView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),
     path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
