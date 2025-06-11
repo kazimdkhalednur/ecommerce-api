@@ -4,8 +4,6 @@ from .base import *
 
 AUTH_PASSWORD_VALIDATORS = []
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 INSTALLED_APPS = [
     *INSTALLED_APPS,
     "drf_spectacular_sidecar",  # required for Django collectstatic discovery

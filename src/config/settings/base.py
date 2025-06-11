@@ -184,7 +184,13 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BROKER_URL = config("CELERY_BROKER_URL", cast=str)
 
-
-DEFAULT_FROM_EMAIL = "admin@example.com"
+# email configuraitn
+EMAIL_BACKEND = config("EMAIL_BACKEND", cast=str)
+EMAIL_HOST = config("EMAIL_HOST", cast=str)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", cast=str)
 
 VERIFICATION_EMAIL_TIMEOUT = 300

@@ -70,6 +70,13 @@ services:
       watchmedo auto-restart --directory=/app/ --pattern=*.py --recursive -- celery -A config worker --loglevel=info
     depends_on:
       - server
+  
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1025:1025"  # SMTP port
+      - "1080:1080"  # Web UI
+    restart: always
 
 volumes:
   db-data:
